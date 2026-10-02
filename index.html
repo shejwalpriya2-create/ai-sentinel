@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Sentinel | Message Security</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         PREMIUM INTRO SCREEN
+         ========================================= -->
+
+    <div id="intro">
+
+        <div class="intro-content">
+
+            <div class="intro-logo">
+
+                <div class="logo-ring"></div>
+
+                <span>AI</span>
+
+            </div>
+
+
+            <h1>AI SENTINEL</h1>
+
+
+            <p>
+                INTELLIGENT MESSAGE SECURITY
+            </p>
+
+
+            <div class="intro-line">
+
+                <div class="intro-progress"></div>
+
+            </div>
+
+
+            <span class="intro-status">
+                SECURE SYSTEM INITIALIZING
+            </span>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         MAIN APPLICATION
+         ========================================= -->
+
+    <div class="container" id="mainApp">
+
+        <h1>
+            🤖 AI Message Spam Detector
+        </h1>
+
+
+        <p class="subtitle">
+            Detect whether a message is spam using AI
+        </p>
+
+
+        <!-- MESSAGE INPUT -->
+
+        <textarea
+            id="message"
+            placeholder="Enter your message here..."
+        ></textarea>
+
+
+        <!-- DETECT BUTTON -->
+
+        <button onclick="detectSpam()">
+            🔍 Detect Spam
+        </button>
+
+
+        <!-- RESULT -->
+
+        <div
+            id="result"
+            class="result"
+        ></div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+         ========================================= -->
+
+    <script>
+
+
+        /* =====================================
+           SHOW MAIN PAGE AFTER INTRO
+           ===================================== */
+
+        setTimeout(function () {
+
+            document
+                .getElementById("mainApp")
+                .classList.add("show-main");
+
+        }, 2800);
+
+
+
+        /* =====================================
+           SPAM DETECTION
+           ===================================== */
+
+        async function detectSpam() {
+
+            const message =
+                document
+                    .getElementById("message")
+                    .value;
+
+
+            const resultBox =
+                document
+                    .getElementById("result");
+
+
+            /* EMPTY MESSAGE */
+
+            if (!message.trim()) {
+
+                resultBox.className = "result";
+
+                resultBox.innerHTML =
+                    "⚠️ Please enter a message.";
+
+                return;
+            }
+
+
+            /* ANALYZING */
+
+            resultBox.className = "result";
+
+            resultBox.innerHTML =
+                "🔄 Analyzing message...";
+
+
+            try {
+
+                const response =
+                    await fetch("/detect", {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body: JSON.stringify({
+                            message: message
+                        })
+
+                    });
+
+
+                const data =
+                    await response.json();
+
+
+                /* BACKEND ERROR */
+
+                if (data.error) {
+
+                    resultBox.className =
+                        "result";
+
+                    resultBox.innerHTML =
+                        "⚠️ " + data.error;
+
+                    return;
+                }
+
+
+                /* RESULT STYLE */
+
+                resultBox.className =
+                    "result " +
+                    (
+                        data.result === "SPAM"
+                            ? "spam"
+                            : "not-spam"
+                    );
+
+
+                /* RESULT DISPLAY */
+
+                resultBox.innerHTML = `
+
+                    <h2>
+
+                        ${
+                            data.result === "SPAM"
+                                ? "🚨 SPAM DETECTED"
+                                : "✅ NOT SPAM"
+                        }
+
+                    </h2>
+
+
+                    <p>
+
+                        Confidence:
+                        ${data.confidence}%
+
+                    </p>
+
+                `;
+
+            }
+
+
+            catch (error) {
+
+                resultBox.className =
+                    "result";
+
+                resultBox.innerHTML =
+                    "⚠️ Unable to connect to the AI server.";
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

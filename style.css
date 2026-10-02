@@ -1,0 +1,624 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: "Segoe UI", Arial, sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(37, 99, 235, 0.16),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(124, 58, 237, 0.14),
+            transparent 30%
+        ),
+        #03050a;
+
+    color: #f8fafc;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+
+/* =========================================
+   MAIN CARD
+   ========================================= */
+
+.container {
+    width: 100%;
+    max-width: 850px;
+
+    padding: 55px;
+
+    background: rgba(10, 14, 24, 0.82);
+
+    border: 1px solid rgba(148, 163, 184, 0.16);
+
+    border-radius: 28px;
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 30px 100px rgba(0, 0, 0, 0.65),
+        inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+    /* Hidden while intro is showing */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+}
+
+
+/* Main page appears after intro */
+
+.container.show-main {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+h1 {
+    margin: 0;
+
+    text-align: center;
+
+    font-size: 42px;
+    font-weight: 750;
+
+    letter-spacing: -1.5px;
+
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #93c5fd,
+        #c4b5fd
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+    text-align: center;
+
+    margin: 14px 0 40px;
+
+    color: #94a3b8;
+
+    font-size: 17px;
+}
+
+
+/* =========================================
+   MESSAGE BOX
+   ========================================= */
+
+textarea {
+    width: 100%;
+    height: 190px;
+
+    padding: 22px;
+
+    resize: vertical;
+
+    border-radius: 18px;
+
+    border: 1px solid #273449;
+
+    background: rgba(3, 7, 18, 0.9);
+
+    color: #f8fafc;
+
+    font-size: 16px;
+
+    line-height: 1.6;
+
+    outline: none;
+
+    transition: all 0.25s ease;
+
+    box-shadow:
+        inset 0 0 30px rgba(0, 0, 0, 0.25);
+}
+
+textarea::placeholder {
+    color: #64748b;
+}
+
+textarea:focus {
+    border-color: #3b82f6;
+
+    box-shadow:
+        0 0 0 4px rgba(59, 130, 246, 0.10),
+        0 0 35px rgba(37, 99, 235, 0.12);
+}
+
+
+/* =========================================
+   BUTTON
+   ========================================= */
+
+button {
+    width: 100%;
+
+    margin-top: 22px;
+
+    padding: 17px;
+
+    border: none;
+
+    border-radius: 16px;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 12px 30px rgba(37, 99, 235, 0.25);
+
+    transition: all 0.25s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 18px 40px rgba(37, 99, 235, 0.35);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+
+/* =========================================
+   RESULT CARD
+   ========================================= */
+
+.result {
+    margin-top: 28px;
+
+    padding: 28px;
+
+    min-height: 125px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 20px;
+
+    background: rgba(3, 7, 18, 0.75);
+
+    border: 1px solid #273449;
+
+    transition: all 0.3s ease;
+}
+
+.result h2 {
+    margin: 0 0 10px;
+
+    font-size: 30px;
+
+    letter-spacing: -0.5px;
+}
+
+.result p {
+    margin: 0;
+
+    color: #94a3b8;
+
+    font-size: 17px;
+}
+
+
+/* =========================================
+   SPAM RESULT
+   ========================================= */
+
+.result.spam {
+    border-color: rgba(239, 68, 68, 0.65);
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(239, 68, 68, 0.08),
+            transparent 65%
+        );
+
+    box-shadow:
+        0 0 35px rgba(239, 68, 68, 0.08);
+}
+
+.result.spam h2 {
+    color: #f87171;
+
+    text-shadow:
+        0 0 20px rgba(239, 68, 68, 0.25);
+}
+
+
+/* =========================================
+   SAFE RESULT
+   ========================================= */
+
+.result.not-spam {
+    border-color: rgba(34, 197, 94, 0.65);
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(34, 197, 94, 0.08),
+            transparent 65%
+        );
+
+    box-shadow:
+        0 0 35px rgba(34, 197, 94, 0.08);
+}
+
+.result.not-spam h2 {
+    color: #4ade80;
+
+    text-shadow:
+        0 0 20px rgba(34, 197, 94, 0.25);
+}
+
+
+/* =========================================
+   PREMIUM INTRO SCREEN
+   ========================================= */
+
+#intro {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 99999;
+
+    width: 100vw;
+
+    height: 100vh;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(37, 99, 235, 0.12),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(79, 70, 229, 0.08),
+            transparent 30%
+        ),
+        #03050a;
+
+    opacity: 1;
+
+    visibility: visible;
+
+    animation:
+        introExit 0.6s ease 2.2s forwards;
+}
+
+
+/* INTRO CONTENT */
+
+.intro-content {
+    text-align: center;
+
+    padding: 30px;
+
+    animation:
+        introEnter 1.2s ease forwards;
+}
+
+
+/* AI LOGO */
+
+.intro-logo {
+    position: relative;
+
+    width: 90px;
+
+    height: 90px;
+
+    margin: 0 auto 30px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border: 1px solid rgba(147, 197, 253, 0.45);
+
+    border-radius: 50%;
+
+    background: rgba(15, 23, 42, 0.45);
+
+    color: #93c5fd;
+
+    font-size: 25px;
+
+    font-weight: 700;
+
+    box-shadow:
+        0 0 40px rgba(37, 99, 235, 0.18),
+        inset 0 0 25px rgba(59, 130, 246, 0.05);
+}
+
+
+/* OUTER LOGO RING */
+
+.logo-ring {
+    position: absolute;
+
+    inset: -9px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(96, 165, 250, 0.15);
+
+    animation:
+        ringPulse 2s ease-in-out infinite;
+}
+
+
+/* INTRO TITLE */
+
+.intro-content h1 {
+    margin: 0;
+
+    font-size: 46px;
+
+    letter-spacing: 9px;
+
+    font-weight: 600;
+
+    background: linear-gradient(
+        90deg,
+        #ffffff,
+        #93c5fd,
+        #c4b5fd
+    );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    text-shadow:
+        0 0 30px rgba(96, 165, 250, 0.12);
+}
+
+
+/* INTRO SUBTITLE */
+
+.intro-content p {
+    margin: 14px 0 34px;
+
+    color: #64748b;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+
+    font-weight: 500;
+}
+
+
+/* LOADING LINE */
+
+.intro-line {
+    width: 240px;
+
+    height: 2px;
+
+    margin: 0 auto;
+
+    background: #111827;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+}
+
+
+/* LOADING PROGRESS */
+
+.intro-progress {
+    width: 0%;
+
+    height: 100%;
+
+    background: #60a5fa;
+
+    box-shadow:
+        0 0 15px rgba(96, 165, 250, 0.8);
+
+    animation:
+        loading 2.2s ease forwards;
+}
+
+
+/* STATUS */
+
+.intro-status {
+    display: block;
+
+    margin-top: 15px;
+
+    color: #475569;
+
+    font-size: 10px;
+
+    letter-spacing: 2px;
+}
+
+
+/* =========================================
+   INTRO ANIMATIONS
+   ========================================= */
+
+@keyframes introEnter {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(18px)
+            scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+@keyframes loading {
+
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+
+@keyframes ringPulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+
+        opacity: 0.35;
+    }
+
+    50% {
+        transform: scale(1.08);
+
+        opacity: 1;
+    }
+}
+
+
+@keyframes introExit {
+
+    from {
+        opacity: 1;
+
+        visibility: visible;
+    }
+
+    to {
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE MAIN PAGE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .container {
+        padding: 30px 22px;
+
+        border-radius: 22px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    .subtitle {
+        font-size: 15px;
+    }
+
+    textarea {
+        height: 160px;
+    }
+}
+
+
+/* =========================================
+   RESPONSIVE INTRO
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .intro-content h1 {
+        font-size: 30px;
+
+        letter-spacing: 5px;
+    }
+
+    .intro-content p {
+        font-size: 10px;
+
+        letter-spacing: 3px;
+    }
+
+    .intro-line {
+        width: 180px;
+    }
+
+    .intro-logo {
+        width: 75px;
+
+        height: 75px;
+
+        margin-bottom: 24px;
+    }
+}
